@@ -14,8 +14,8 @@
   "keywords": [
     "utils"
   ],
-  "bin" : {
-	"MCClient" : "./MCClient.js"
+  "bin": {
+    "MCClient": "./MCClient.js"
   },
   "author": "yangjh",
   "license": "apache",
@@ -23,6 +23,7 @@
     "memcached": "~0.2.8",
     "commander": "~2.3.0",
     "colors": "~0.6.2",
-    "node-js-beautify": "~0.1.0"
+    "node-js-beautify": "~0.1.0",
+    "date-utils": "~1.2.16"
   }
 }

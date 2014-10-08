@@ -25,7 +25,8 @@ function extractKV(val) {
 var Memcached = require('memcached');
 var colors = require('colors');
 Memcached.config.poolSize = 5;
-/** close the connection if we are idle**/
+
+/** close the connection if idle**/
 Memcached.config.timeout= 2000;  
 var memcached = new Memcached('127.0.0.1:11511');
 
@@ -49,8 +50,14 @@ if(program.delete) {
 	del(program.delete);		
 }
 if(program.list) {
-	iterator(function(key){
-		console.log('key:' + key.blue);	
+	var dateUtils = require('date-utils');
+	var date = parseInt(new Date().getTime()/1000);
+	console.log('date:'+date);
+	iterator(function(item){
+		if (date < item['s']) {
+			expireDate = new Date(item['s']*1000);
+			console.log('key:' + item['key'].blue + '[expire:'.red + + ',size:'.red+item['b']+']');	
+		}
 	});
 }
 if(program.flush) {
@@ -79,10 +86,10 @@ function iterator(callback) {
 					if (response) {
 						if(response instanceof Array ) {
 							response.forEach(function(cacheItem){
-								callback(cacheItem['key']);
+								callback(cacheItem);
 							});
 						} else {
-							callback(response['key']);
+							callback(response);
 						}
 					} 
 				})
