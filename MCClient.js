@@ -55,8 +55,8 @@ if(program.list) {
 	console.log('date:'+date);
 	iterator(function(item){
 		if (date < item['s']) {
-			expireDate = new Date(item['s']*1000);
-			console.log('key:' + item['key'].blue + '[expire:'.red + + ',size:'.red+item['b']+']');	
+//			expireDate = new Date(item['s']*1000);
+			console.log('key:' + item['key'].blue + '[size:'.red+item['b']+']');	
 		}
 	});
 }
