@@ -139,7 +139,6 @@ function outputIfExist(item) {
 	memcached.get(item['key'], function(err, data) {
 		if (data) {
 			var expireDate = new Date(item['s'] * 1000);
-//			var expireDateStr = expireDate.toLocaleDateString() + ' '+expireDate.toLocaleTimeString();
 			var expireDateStr = expireDate.getUTCFullYear() + '年' +(expireDate.getUTCMonth()+1) + '月' + expireDate.getUTCDate()+ '日' + expireDate.toLocaleTimeString();
 			console.log('key: ' + item['key'].red + '[size:' + item['b'] + ', expire:' + expireDateStr +']');
 		}
