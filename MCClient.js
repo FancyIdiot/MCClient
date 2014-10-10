@@ -27,7 +27,7 @@ var colors = require('colors');
 Memcached.config.poolSize = 5;
 
 /** close the connection if idle**/
-Memcached.config.timeout= 2000;  
+Memcached.config.timeout= 1000;  
 var memcached = new Memcached('127.0.0.1:11511');
 
 /**
@@ -35,7 +35,8 @@ var memcached = new Memcached('127.0.0.1:11511');
  */
 if(program.prefix) {
 	var prefix = program.prefix;
-	iterator(function(key){
+	iterator(function(item){
+		var key = item['key'];
 		if(key.indexOf(prefix) == 0) {
 			del(key);	
 		}	
@@ -52,11 +53,9 @@ if(program.delete) {
 if(program.list) {
 	var dateUtils = require('date-utils');
 	var date = parseInt(new Date().getTime()/1000);
-	console.log('date:'+date);
 	iterator(function(item){
 		if (date < item['s']) {
-//			expireDate = new Date(item['s']*1000);
-			console.log('key:' + item['key'].blue + '[size:'.red+item['b']+']');	
+			outputIfExist(item);
 		}
 	});
 }
@@ -132,4 +131,17 @@ function flushAll() {
 	memcached.flush(function(){
 		console.log('already flush all'.red);
 	}); 
+}
+/**
+ *如果该键值有效，则输出key信息
+ */
+function outputIfExist(item) {
+	memcached.get(item['key'], function(err, data) {
+		if (data) {
+			var expireDate = new Date(item['s'] * 1000);
+//			var expireDateStr = expireDate.toLocaleDateString() + ' '+expireDate.toLocaleTimeString();
+			var expireDateStr = expireDate.getUTCFullYear() + '年' +(expireDate.getUTCMonth()+1) + '月' + expireDate.getUTCDate()+ '日' + expireDate.toLocaleTimeString();
+			console.log('key: ' + item['key'].red + '[size:' + item['b'] + ', expire:' + expireDateStr +']');
+		}
+	});		
 }
