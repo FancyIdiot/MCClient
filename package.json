@@ -1,7 +1,7 @@
 {
-  "name": "nodecmd",
-  "version": "0.0.1",
-  "description": "node command line utils",
+  "name": "mcclient",
+  "version": "1.0.4",
+  "description": "memcached client",
   "email": "yangjunhonggz@gmail.com",
   "main": "MCClient.js",
   "scripts": {
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "none"
+    "url": "https://github.com/FancyIdiot/MCClient"
   },
   "keywords": [
-    "utils"
+    "utils, memcached"
   ],
   "bin": {
     "MCClient": "./MCClient.js"
@@ -23,7 +23,6 @@
     "memcached": "~0.2.8",
     "commander": "~2.3.0",
     "colors": "~0.6.2",
-    "node-js-beautify": "~0.1.0",
-    "date-utils": "~1.2.16"
+    "node-js-beautify": "~0.1.0"
   }
 }

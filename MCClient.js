@@ -51,7 +51,6 @@ if(program.delete) {
 	del(program.delete);		
 }
 if(program.list) {
-	var dateUtils = require('date-utils');
 	var date = parseInt(new Date().getTime()/1000);
 	iterator(function(item){
 		if (date < item['s']) {
@@ -136,7 +135,7 @@ function flushAll() {
  *如果该键值有效，则输出key信息
  */
 function outputIfExist(item) {
-	memcached.get(item['key'], function(err, data) {
+	memcached.get(item['key'].replace(/[ ]/g,''), function(err, data) {
 		if (data) {
 			var expireDate = new Date(item['s'] * 1000);
 			var expireDateStr = expireDate.getUTCFullYear() + '年' +(expireDate.getUTCMonth()+1) + '月' + expireDate.getUTCDate()+ '日' + expireDate.toLocaleTimeString();
